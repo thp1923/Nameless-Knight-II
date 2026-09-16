@@ -2,6 +2,7 @@ using Gaia;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Cinemachine;
 #if UNITY_EDITOR
 using UnityEditor;
 using System;
@@ -442,11 +443,19 @@ namespace Gaia
 #if GAIA_CINEMACHINE
                 if (spawnedObject != null)
                 {
-                    Cinemachine.CinemachineVirtualCamera cVCam = spawnedObject.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
-                    if (cVCam != null)
+                    CinemachineVirtualCameraBase vCam = spawnedObject.GetComponentInChildren<CinemachineVirtualCameraBase>();
+                    if (vCam is CinemachineCamera cmCamera)
                     {
-                        cVCam.m_Lens.FarClipPlane = 2000;
+                        cmCamera.Lens.FarClipPlane = 2000f;
                     }
+#if !CINEMACHINE_NO_CM2_SUPPORT
+#pragma warning disable CS0618
+                    else if (vCam is CinemachineVirtualCamera legacyCam)
+                    {
+                        legacyCam.m_Lens.FarClipPlane = 2000f;
+                    }
+#pragma warning restore CS0618
+#endif
                 }
 #endif
             }
