@@ -78,7 +78,7 @@ public class WolfAttack : MonoBehaviour
 
         while (t > 0f)
         {
-            rb.velocity = Vector3.Lerp(Vector3.zero, rb.velocity, t);
+            rb.linearVelocity = Vector3.Lerp(Vector3.zero, rb.linearVelocity, t);
             t -= slowDownRate;
             yield return new WaitForSeconds(0.1f);
         }

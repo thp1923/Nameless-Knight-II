@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using PlayFab;
-using PlayFab.ClientModels;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -267,7 +265,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    /* ===================== SAVE / LOAD PLAYFAB ===================== */
+    /* ===================== SAVE / LOAD LOCAL ===================== */
 
     public void SaveInventoryForSlot(string saveSlot)
     {
@@ -315,9 +313,8 @@ public class InventoryManager : MonoBehaviour
             { $"{saveSlot}_Equip", JsonUtility.ToJson(new InventoryListWrapper { items = equipItems }) }
         };
 
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest { Data = data },
-            r => Debug.Log($"[SaveInventory] ✅ {saveSlot}"),
-            e => Debug.LogError($"[SaveInventory] ❌ {e.ErrorMessage}"));
+        LocalSaveStorage.Set($"{saveSlot}_Bag", data[$"{saveSlot}_Bag"]);
+        LocalSaveStorage.Set($"{saveSlot}_Equip", data[$"{saveSlot}_Equip"]);
     }
 
     public void LoadInventoryForSlot(string saveSlot)
@@ -328,50 +325,40 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), result =>
+        foreach (Transform child in contentPanel) Destroy(child.gameObject);
+        foreach (var slot in equipmentSlots) slot.ClearSlot();
+
+        if (LocalSaveStorage.TryGet($"{saveSlot}_Bag", out string bagJson))
         {
-            // clear UI
-            foreach (Transform child in contentPanel) Destroy(child.gameObject);
-            foreach (var slot in equipmentSlots) slot.ClearSlot();
+            var bagData = JsonUtility.FromJson<InventoryListWrapper>(bagJson);
+            if (bagData?.items != null)
+                foreach (var it in bagData.items)
+                {
+                    var item = GetItemByID(it.itemId);
+                    if (item != null) CreateBagSlot(item, it.quantity, autosave: false);
+                }
+        }
 
-            // Túi
-            if (result.Data != null && result.Data.ContainsKey($"{saveSlot}_Bag"))
-            {
-                var bagData = JsonUtility.FromJson<InventoryListWrapper>(result.Data[$"{saveSlot}_Bag"].Value);
-                if (bagData?.items != null)
-                    foreach (var it in bagData.items)
+        if (LocalSaveStorage.TryGet($"{saveSlot}_Equip", out string equipJson))
+        {
+            var equipData = JsonUtility.FromJson<InventoryListWrapper>(equipJson);
+            if (equipData?.items != null)
+                foreach (var it in equipData.items)
+                {
+                    var item = GetItemByID(it.itemId);
+                    if (item == null) continue;
+
+                    foreach (var slot in equipmentSlots)
                     {
-                        var item = GetItemByID(it.itemId);
-                        if (item != null) CreateBagSlot(item, it.quantity, autosave: false);
+                        if (slot.slotType.ToString() != it.slotType) continue;
+                        slot.AddItem(item, 1);
+                        ApplyEquipEffects(item);
+                        break;
                     }
-            }
+                }
+        }
 
-            // Trang bị
-            if (result.Data != null && result.Data.ContainsKey($"{saveSlot}_Equip"))
-            {
-                var equipData = JsonUtility.FromJson<InventoryListWrapper>(result.Data[$"{saveSlot}_Equip"].Value);
-                if (equipData?.items != null)
-                    foreach (var it in equipData.items)
-                    {
-                        var item = GetItemByID(it.itemId);
-                        if (item == null) continue;
-
-                        foreach (var slot in equipmentSlots)
-                        {
-                            if (slot.slotType.ToString() == it.slotType)
-                            {
-                                slot.AddItem(item, 1);
-                                ApplyEquipEffects(item); // áp lại bonus
-                                break;
-                            }
-                        }
-                    }
-            }
-
-            MergeAllStackableItems();
-            Debug.Log($"[LoadInventory] ✅ {saveSlot}");
-        },
-        e => Debug.LogError($"[LoadInventory] ❌ {e.ErrorMessage}"));
+        MergeAllStackableItems();
     }
 
     /* ===================== HELPERS ===================== */
@@ -460,7 +447,7 @@ public class InventoryManager : MonoBehaviour
 
     private UpgradeStats GetUpgrade()
     {
-        if (upgradeStats == null) upgradeStats = FindObjectOfType<UpgradeStats>();
+        if (upgradeStats == null) upgradeStats = FindFirstObjectByType<UpgradeStats>();
         return upgradeStats;
     }
 

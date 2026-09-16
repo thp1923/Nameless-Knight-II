@@ -40,14 +40,14 @@ public class TigerAttackShooter : MonoBehaviour
         var projectileObj = Instantiate(projectile, FirePoint.position, Quaternion.identity) as GameObject;
         wolftAttackscript = projectileObj.GetComponent<WolftAttackTut>();
         RotateToDestination(projectileObj, destination, true);
-        projectileObj.GetComponent<Rigidbody>().velocity = transform.forward * wolftAttackscript.speed;
+        projectileObj.GetComponent<Rigidbody>().linearVelocity = transform.forward * wolftAttackscript.speed;
     }
     void InstantiateProjectileAtFirePoint()
     {
         var projectileObj = Instantiate(projectile, FirePoint.position, Quaternion.identity) as GameObject;
         wolftAttackscript = projectileObj.GetComponent<WolftAttackTut>();
         RotateToDestination(projectileObj, FirePoint.transform.forward * 1000, true);
-        projectileObj.GetComponent<Rigidbody>().velocity = FirePoint.transform.forward * wolftAttackscript.speed;
+        projectileObj.GetComponent<Rigidbody>().linearVelocity = FirePoint.transform.forward * wolftAttackscript.speed;
     }
     void RotateToDestination(GameObject obj, Vector3 destination, bool onlyY)
     {

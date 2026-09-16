@@ -1,6 +1,4 @@
 using UnityEngine;
-using PlayFab;
-using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 using StatsManager;
 using System.Collections;
@@ -129,11 +127,11 @@ public class GameAutoSaveManager : MonoBehaviour
         }
 
         var statsAlive        = player.GetComponent<StatsAlive>();
-        var attackDamgePlayer = FindObjectOfType<AttackDamgePlayer>();
-        var stamina           = FindObjectOfType<Stamina>();
-        var upgradeStats      = FindObjectOfType<UpgradeStats>();
-        var specialSkill      = FindObjectOfType<SpecialSkill>();
-        var playerBuff        = FindObjectOfType<PlayerBuff>();
+        var attackDamgePlayer = FindFirstObjectByType<AttackDamgePlayer>();
+        var stamina           = FindFirstObjectByType<Stamina>();
+        var upgradeStats      = FindFirstObjectByType<UpgradeStats>();
+        var specialSkill      = FindFirstObjectByType<SpecialSkill>();
+        var playerBuff        = FindFirstObjectByType<PlayerBuff>();
 
         if (statsAlive == null || attackDamgePlayer == null || stamina == null || upgradeStats == null)
         {
@@ -184,8 +182,6 @@ public class GameAutoSaveManager : MonoBehaviour
 
         _lastSavedSnapshot = data;
 
-        string json = JsonUtility.ToJson(data);
-
         if (_isSaving)
         {
             onDone?.Invoke();
@@ -193,23 +189,9 @@ public class GameAutoSaveManager : MonoBehaviour
         }
 
         _isSaving = true;
-        PlayFabClientAPI.UpdateUserData(
-            new UpdateUserDataRequest
-            {
-                Data = new Dictionary<string, string> { { saveSlot, json } }
-            },
-            result =>
-            {
-                _isSaving = false;
-                onDone?.Invoke();
-            },
-            error =>
-            {
-                _isSaving = false;
-                Debug.LogError("[AutoSave] Save error: " + error.GenerateErrorReport());
-                onDone?.Invoke();
-            }
-        );
+        LocalSaveStorage.Set(saveSlot, JsonUtility.ToJson(data));
+        _isSaving = false;
+        onDone?.Invoke();
     }
 
     public void OnBonfireRest()
@@ -270,32 +252,20 @@ public class GameAutoSaveManager : MonoBehaviour
         saveSlot = slot;
         _isRespawning = true;
 
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), result =>
+        if (LocalSaveStorage.TryGet(saveSlot, out string json))
         {
-            if (result.Data != null && result.Data.ContainsKey(saveSlot))
-            {
-                string json = result.Data[saveSlot].Value;
-                GameStateData data = JsonUtility.FromJson<GameStateData>(json);
+            GameStateData data = JsonUtility.FromJson<GameStateData>(json);
+            nextPlayerPosition = new Vector3(data.posX, data.posY, data.posZ);
 
-                nextPlayerPosition = new Vector3(data.posX, data.posY, data.posZ);
+            SceneManager.sceneLoaded -= OnSceneLoadedAfterLoad;
+            SceneManager.sceneLoaded += OnSceneLoadedAfterLoad;
+            SceneManager.LoadScene(data.LastScene);
+            _pendingLoadData = data;
+            return;
+        }
 
-                SceneManager.sceneLoaded -= OnSceneLoadedAfterLoad;
-                SceneManager.sceneLoaded += OnSceneLoadedAfterLoad;
-                SceneManager.LoadScene(data.LastScene);
-
-                _pendingLoadData = data;
-            }
-            else
-            {
-                _isRespawning = false;
-                Debug.LogWarning($"[AutoSave] No data for slot {saveSlot}");
-            }
-        },
-        error =>
-        {
-            _isRespawning = false;
-            Debug.LogError("[AutoSave] Load error: " + error.GenerateErrorReport());
-        });
+        _isRespawning = false;
+        Debug.LogWarning($"[AutoSave] No data for slot {saveSlot}");
     }
 
     private void OnSceneLoadedAfterLoad(Scene scene, LoadSceneMode mode)
@@ -352,11 +322,11 @@ public class GameAutoSaveManager : MonoBehaviour
         playTime = Mathf.Max(0, data.PlayTime);
 
         var statsAlive = player.GetComponent<StatsAlive>();
-        var atk        = FindObjectOfType<AttackDamgePlayer>();
-        var stamina    = FindObjectOfType<Stamina>();
-        var upgrade    = FindObjectOfType<UpgradeStats>();
-        var special    = FindObjectOfType<SpecialSkill>();
-        var playerBuff = FindObjectOfType<PlayerBuff>();
+        var atk        = FindFirstObjectByType<AttackDamgePlayer>();
+        var stamina    = FindFirstObjectByType<Stamina>();
+        var upgrade    = FindFirstObjectByType<UpgradeStats>();
+        var special    = FindFirstObjectByType<SpecialSkill>();
+        var playerBuff = FindFirstObjectByType<PlayerBuff>();
 
         if (upgrade != null)
         {
