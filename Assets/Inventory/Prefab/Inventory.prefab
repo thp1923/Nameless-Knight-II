@@ -2035,17 +2035,17 @@ MonoBehaviour:
   - {fileID: 8228415969842534960}
   - {fileID: 6594541116545404873}
   testItems:
-  - {fileID: 11400000, guid: 323b88bdd4305c14b85ba489f0168662, type: 2}
-  - {fileID: 11400000, guid: 323b88bdd4305c14b85ba489f0168662, type: 2}
-  - {fileID: 11400000, guid: 323b88bdd4305c14b85ba489f0168662, type: 2}
-  - {fileID: 11400000, guid: bb8cc491a35c0f644abdd9fa0828b301, type: 2}
-  - {fileID: 11400000, guid: 6c7fc097ce5507643b2a313d25306b4f, type: 2}
-  - {fileID: 11400000, guid: 4f9106eb27a05cf44ad133c5a7d58db7, type: 2}
-  - {fileID: 11400000, guid: cc85646e3550526478f4ffc8dba00047, type: 2}
-  - {fileID: 11400000, guid: 840125323f33f3244bbe863b0f09d6fd, type: 2}
-  - {fileID: 11400000, guid: 895d1c4db4dbf0f40b96913eda084fe3, type: 2}
-  - {fileID: 11400000, guid: a02157e69356e6840a1e901360a8b4fd, type: 2}
-  - {fileID: 11400000, guid: 6bd16c35e78b345499d2f6db45cd8bf5, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   buildFromTestItems: 1
   upgradeStats: {fileID: 0}
 --- !u!1 &6602918875737147478
