@@ -261,7 +261,6 @@ Shader "M_Terrain"
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -634,9 +633,9 @@ struct VertexInput
 
 				float4 appendResult33_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness0));
 				float2 uv_Splat0 = IN.ase_texcoord8.xy * _Splat0_ST.xy + _Splat0_ST.zw;
-				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_MTerrainShared, uv_Splat0 );
+				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_LinearRepeat, uv_Splat0 );
 				float2 uv_Control = IN.ase_texcoord8.xy * _Control_ST.xy + _Control_ST.zw;
-				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_MTerrainShared, uv_Control );
+				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_LinearRepeat, uv_Control );
 				float dotResult20_g9 = dot( tex2DNode5_g9 , float4(1,1,1,1) );
 				float SplatWeight22_g9 = dotResult20_g9;
 				float localSplatClip74_g9 = ( SplatWeight22_g9 );
@@ -651,17 +650,17 @@ struct VertexInput
 				float4 tintLayer0253_g9 = appendResult258_g9;
 				float4 appendResult36_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness1));
 				float2 uv_Splat1 = IN.ase_texcoord8.xy * _Splat1_ST.xy + _Splat1_ST.zw;
-				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_MTerrainShared, uv_Splat1 );
+				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_LinearRepeat, uv_Splat1 );
 				float4 appendResult261_g9 = (float4(( (SplatControl26_g9).ggg * (_DiffuseRemapScale1).rgb ) , 1.0));
 				float4 tintLayer1254_g9 = appendResult261_g9;
 				float4 appendResult39_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness2));
 				float2 uv_Splat2 = IN.ase_texcoord8.xy * _Splat2_ST.xy + _Splat2_ST.zw;
-				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_MTerrainShared, uv_Splat2 );
+				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_LinearRepeat, uv_Splat2 );
 				float4 appendResult263_g9 = (float4(( (SplatControl26_g9).bbb * (_DiffuseRemapScale2).rgb ) , 1.0));
 				float4 tintLayer2255_g9 = appendResult263_g9;
 				float4 appendResult42_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness3));
 				float2 uv_Splat3 = IN.ase_texcoord8.xy * _Splat3_ST.xy + _Splat3_ST.zw;
-				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_MTerrainShared, uv_Splat3 );
+				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_LinearRepeat, uv_Splat3 );
 				float4 appendResult265_g9 = (float4(( (SplatControl26_g9).aaa * (_DiffuseRemapScale3).rgb ) , 1.0));
 				float4 tintLayer3256_g9 = appendResult265_g9;
 				float4 weightedBlendVar9_g9 = float4(1,1,1,1);
@@ -670,7 +669,7 @@ struct VertexInput
 				float4 temp_output_60_0_g9 = MixDiffuse28_g9;
 				float4 localClipHoles100_g9 = ( temp_output_60_0_g9 );
 				float2 uv_TerrainHolesTexture = IN.ase_texcoord8.xy * _TerrainHolesTexture_ST.xy + _TerrainHolesTexture_ST.zw;
-				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_MTerrainShared, uv_TerrainHolesTexture ).r;
+				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_LinearRepeat, uv_TerrainHolesTexture ).r;
 				float Hole100_g9 = holeClipValue99_g9;
 				{
 				#ifdef _ALPHATEST_ON
@@ -680,7 +679,7 @@ struct VertexInput
 				
 				float4 temp_output_59_0_g9 = SplatControl26_g9;
 				float4 weightedBlendVar8_g9 = temp_output_59_0_g9;
-				float4 weightedBlend8_g9 = ( weightedBlendVar8_g9.x*SAMPLE_TEXTURE2D(_Normal0, sampler_MTerrainShared, uv_Splat0 ) + weightedBlendVar8_g9.y*SAMPLE_TEXTURE2D(_Normal1, sampler_MTerrainShared, uv_Splat1 ) + weightedBlendVar8_g9.z*SAMPLE_TEXTURE2D(_Normal2, sampler_MTerrainShared, uv_Splat2 ) + weightedBlendVar8_g9.w*SAMPLE_TEXTURE2D(_Normal3, sampler_MTerrainShared, uv_Splat3 ) );
+				float4 weightedBlend8_g9 = ( weightedBlendVar8_g9.x*SAMPLE_TEXTURE2D(_Normal0, sampler_LinearRepeat, uv_Splat0 ) + weightedBlendVar8_g9.y*SAMPLE_TEXTURE2D(_Normal1, sampler_LinearRepeat, uv_Splat1 ) + weightedBlendVar8_g9.z*SAMPLE_TEXTURE2D(_Normal2, sampler_LinearRepeat, uv_Splat2 ) + weightedBlendVar8_g9.w*SAMPLE_TEXTURE2D(_Normal3, sampler_LinearRepeat, uv_Splat3 ) );
 				float3 temp_output_61_0_g9 = UnpackNormalScale( weightedBlend8_g9, 1.0 );
 				
 
@@ -972,7 +971,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -1342,7 +1340,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -1687,7 +1684,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -1990,9 +1986,9 @@ struct VertexInput
 
 				float4 appendResult33_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness0));
 				float2 uv_Splat0 = IN.ase_texcoord4.xy * _Splat0_ST.xy + _Splat0_ST.zw;
-				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_MTerrainShared, uv_Splat0 );
+				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_LinearRepeat, uv_Splat0 );
 				float2 uv_Control = IN.ase_texcoord4.xy * _Control_ST.xy + _Control_ST.zw;
-				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_MTerrainShared, uv_Control );
+				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_LinearRepeat, uv_Control );
 				float dotResult20_g9 = dot( tex2DNode5_g9 , float4(1,1,1,1) );
 				float SplatWeight22_g9 = dotResult20_g9;
 				float localSplatClip74_g9 = ( SplatWeight22_g9 );
@@ -2007,17 +2003,17 @@ struct VertexInput
 				float4 tintLayer0253_g9 = appendResult258_g9;
 				float4 appendResult36_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness1));
 				float2 uv_Splat1 = IN.ase_texcoord4.xy * _Splat1_ST.xy + _Splat1_ST.zw;
-				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_MTerrainShared, uv_Splat1 );
+				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_LinearRepeat, uv_Splat1 );
 				float4 appendResult261_g9 = (float4(( (SplatControl26_g9).ggg * (_DiffuseRemapScale1).rgb ) , 1.0));
 				float4 tintLayer1254_g9 = appendResult261_g9;
 				float4 appendResult39_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness2));
 				float2 uv_Splat2 = IN.ase_texcoord4.xy * _Splat2_ST.xy + _Splat2_ST.zw;
-				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_MTerrainShared, uv_Splat2 );
+				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_LinearRepeat, uv_Splat2 );
 				float4 appendResult263_g9 = (float4(( (SplatControl26_g9).bbb * (_DiffuseRemapScale2).rgb ) , 1.0));
 				float4 tintLayer2255_g9 = appendResult263_g9;
 				float4 appendResult42_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness3));
 				float2 uv_Splat3 = IN.ase_texcoord4.xy * _Splat3_ST.xy + _Splat3_ST.zw;
-				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_MTerrainShared, uv_Splat3 );
+				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_LinearRepeat, uv_Splat3 );
 				float4 appendResult265_g9 = (float4(( (SplatControl26_g9).aaa * (_DiffuseRemapScale3).rgb ) , 1.0));
 				float4 tintLayer3256_g9 = appendResult265_g9;
 				float4 weightedBlendVar9_g9 = float4(1,1,1,1);
@@ -2026,7 +2022,7 @@ struct VertexInput
 				float4 temp_output_60_0_g9 = MixDiffuse28_g9;
 				float4 localClipHoles100_g9 = ( temp_output_60_0_g9 );
 				float2 uv_TerrainHolesTexture = IN.ase_texcoord4.xy * _TerrainHolesTexture_ST.xy + _TerrainHolesTexture_ST.zw;
-				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_MTerrainShared, uv_TerrainHolesTexture ).r;
+				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_LinearRepeat, uv_TerrainHolesTexture ).r;
 				float Hole100_g9 = holeClipValue99_g9;
 				{
 				#ifdef _ALPHATEST_ON
@@ -2103,7 +2099,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -2384,9 +2379,9 @@ struct VertexInput
 
 				float4 appendResult33_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness0));
 				float2 uv_Splat0 = IN.ase_texcoord2.xy * _Splat0_ST.xy + _Splat0_ST.zw;
-				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_MTerrainShared, uv_Splat0 );
+				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_LinearRepeat, uv_Splat0 );
 				float2 uv_Control = IN.ase_texcoord2.xy * _Control_ST.xy + _Control_ST.zw;
-				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_MTerrainShared, uv_Control );
+				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_LinearRepeat, uv_Control );
 				float dotResult20_g9 = dot( tex2DNode5_g9 , float4(1,1,1,1) );
 				float SplatWeight22_g9 = dotResult20_g9;
 				float localSplatClip74_g9 = ( SplatWeight22_g9 );
@@ -2401,17 +2396,17 @@ struct VertexInput
 				float4 tintLayer0253_g9 = appendResult258_g9;
 				float4 appendResult36_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness1));
 				float2 uv_Splat1 = IN.ase_texcoord2.xy * _Splat1_ST.xy + _Splat1_ST.zw;
-				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_MTerrainShared, uv_Splat1 );
+				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_LinearRepeat, uv_Splat1 );
 				float4 appendResult261_g9 = (float4(( (SplatControl26_g9).ggg * (_DiffuseRemapScale1).rgb ) , 1.0));
 				float4 tintLayer1254_g9 = appendResult261_g9;
 				float4 appendResult39_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness2));
 				float2 uv_Splat2 = IN.ase_texcoord2.xy * _Splat2_ST.xy + _Splat2_ST.zw;
-				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_MTerrainShared, uv_Splat2 );
+				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_LinearRepeat, uv_Splat2 );
 				float4 appendResult263_g9 = (float4(( (SplatControl26_g9).bbb * (_DiffuseRemapScale2).rgb ) , 1.0));
 				float4 tintLayer2255_g9 = appendResult263_g9;
 				float4 appendResult42_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness3));
 				float2 uv_Splat3 = IN.ase_texcoord2.xy * _Splat3_ST.xy + _Splat3_ST.zw;
-				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_MTerrainShared, uv_Splat3 );
+				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_LinearRepeat, uv_Splat3 );
 				float4 appendResult265_g9 = (float4(( (SplatControl26_g9).aaa * (_DiffuseRemapScale3).rgb ) , 1.0));
 				float4 tintLayer3256_g9 = appendResult265_g9;
 				float4 weightedBlendVar9_g9 = float4(1,1,1,1);
@@ -2420,7 +2415,7 @@ struct VertexInput
 				float4 temp_output_60_0_g9 = MixDiffuse28_g9;
 				float4 localClipHoles100_g9 = ( temp_output_60_0_g9 );
 				float2 uv_TerrainHolesTexture = IN.ase_texcoord2.xy * _TerrainHolesTexture_ST.xy + _TerrainHolesTexture_ST.zw;
-				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_MTerrainShared, uv_TerrainHolesTexture ).r;
+				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_LinearRepeat, uv_TerrainHolesTexture ).r;
 				float Hole100_g9 = holeClipValue99_g9;
 				{
 				#ifdef _ALPHATEST_ON
@@ -2493,7 +2488,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -2797,7 +2791,7 @@ struct VertexInput
 				#endif
 
 				float2 uv_Control = IN.ase_texcoord4.xy * _Control_ST.xy + _Control_ST.zw;
-				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_MTerrainShared, uv_Control );
+				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_LinearRepeat, uv_Control );
 				float dotResult20_g9 = dot( tex2DNode5_g9 , float4(1,1,1,1) );
 				float SplatWeight22_g9 = dotResult20_g9;
 				float localSplatClip74_g9 = ( SplatWeight22_g9 );
@@ -2814,7 +2808,7 @@ struct VertexInput
 				float2 uv_Splat2 = IN.ase_texcoord4.xy * _Splat2_ST.xy + _Splat2_ST.zw;
 				float2 uv_Splat3 = IN.ase_texcoord4.xy * _Splat3_ST.xy + _Splat3_ST.zw;
 				float4 weightedBlendVar8_g9 = temp_output_59_0_g9;
-				float4 weightedBlend8_g9 = ( weightedBlendVar8_g9.x*SAMPLE_TEXTURE2D(_Normal0, sampler_MTerrainShared, uv_Splat0 ) + weightedBlendVar8_g9.y*SAMPLE_TEXTURE2D(_Normal1, sampler_MTerrainShared, uv_Splat1 ) + weightedBlendVar8_g9.z*SAMPLE_TEXTURE2D(_Normal2, sampler_MTerrainShared, uv_Splat2 ) + weightedBlendVar8_g9.w*SAMPLE_TEXTURE2D(_Normal3, sampler_MTerrainShared, uv_Splat3 ) );
+				float4 weightedBlend8_g9 = ( weightedBlendVar8_g9.x*SAMPLE_TEXTURE2D(_Normal0, sampler_LinearRepeat, uv_Splat0 ) + weightedBlendVar8_g9.y*SAMPLE_TEXTURE2D(_Normal1, sampler_LinearRepeat, uv_Splat1 ) + weightedBlendVar8_g9.z*SAMPLE_TEXTURE2D(_Normal2, sampler_LinearRepeat, uv_Splat2 ) + weightedBlendVar8_g9.w*SAMPLE_TEXTURE2D(_Normal3, sampler_LinearRepeat, uv_Splat3 ) );
 				float3 temp_output_61_0_g9 = UnpackNormalScale( weightedBlend8_g9, 1.0 );
 				
 
@@ -2941,7 +2935,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -3304,9 +3297,9 @@ struct VertexInput
 
 				float4 appendResult33_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness0));
 				float2 uv_Splat0 = IN.ase_texcoord8.xy * _Splat0_ST.xy + _Splat0_ST.zw;
-				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_MTerrainShared, uv_Splat0 );
+				float4 tex2DNode4_g9 = SAMPLE_TEXTURE2D(_Splat0, sampler_LinearRepeat, uv_Splat0 );
 				float2 uv_Control = IN.ase_texcoord8.xy * _Control_ST.xy + _Control_ST.zw;
-				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_MTerrainShared, uv_Control );
+				float4 tex2DNode5_g9 = SAMPLE_TEXTURE2D(_Control, sampler_LinearRepeat, uv_Control );
 				float dotResult20_g9 = dot( tex2DNode5_g9 , float4(1,1,1,1) );
 				float SplatWeight22_g9 = dotResult20_g9;
 				float localSplatClip74_g9 = ( SplatWeight22_g9 );
@@ -3321,17 +3314,17 @@ struct VertexInput
 				float4 tintLayer0253_g9 = appendResult258_g9;
 				float4 appendResult36_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness1));
 				float2 uv_Splat1 = IN.ase_texcoord8.xy * _Splat1_ST.xy + _Splat1_ST.zw;
-				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_MTerrainShared, uv_Splat1 );
+				float4 tex2DNode3_g9 = SAMPLE_TEXTURE2D(_Splat1, sampler_LinearRepeat, uv_Splat1 );
 				float4 appendResult261_g9 = (float4(( (SplatControl26_g9).ggg * (_DiffuseRemapScale1).rgb ) , 1.0));
 				float4 tintLayer1254_g9 = appendResult261_g9;
 				float4 appendResult39_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness2));
 				float2 uv_Splat2 = IN.ase_texcoord8.xy * _Splat2_ST.xy + _Splat2_ST.zw;
-				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_MTerrainShared, uv_Splat2 );
+				float4 tex2DNode6_g9 = SAMPLE_TEXTURE2D(_Splat2, sampler_LinearRepeat, uv_Splat2 );
 				float4 appendResult263_g9 = (float4(( (SplatControl26_g9).bbb * (_DiffuseRemapScale2).rgb ) , 1.0));
 				float4 tintLayer2255_g9 = appendResult263_g9;
 				float4 appendResult42_g9 = (float4(1.0 , 1.0 , 1.0 , _Smoothness3));
 				float2 uv_Splat3 = IN.ase_texcoord8.xy * _Splat3_ST.xy + _Splat3_ST.zw;
-				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_MTerrainShared, uv_Splat3 );
+				float4 tex2DNode7_g9 = SAMPLE_TEXTURE2D(_Splat3, sampler_LinearRepeat, uv_Splat3 );
 				float4 appendResult265_g9 = (float4(( (SplatControl26_g9).aaa * (_DiffuseRemapScale3).rgb ) , 1.0));
 				float4 tintLayer3256_g9 = appendResult265_g9;
 				float4 weightedBlendVar9_g9 = float4(1,1,1,1);
@@ -3340,7 +3333,7 @@ struct VertexInput
 				float4 temp_output_60_0_g9 = MixDiffuse28_g9;
 				float4 localClipHoles100_g9 = ( temp_output_60_0_g9 );
 				float2 uv_TerrainHolesTexture = IN.ase_texcoord8.xy * _TerrainHolesTexture_ST.xy + _TerrainHolesTexture_ST.zw;
-				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_MTerrainShared, uv_TerrainHolesTexture ).r;
+				float holeClipValue99_g9 = SAMPLE_TEXTURE2D(_TerrainHolesTexture, sampler_LinearRepeat, uv_TerrainHolesTexture ).r;
 				float Hole100_g9 = holeClipValue99_g9;
 				{
 				#ifdef _ALPHATEST_ON
@@ -3350,7 +3343,7 @@ struct VertexInput
 				
 				float4 temp_output_59_0_g9 = SplatControl26_g9;
 				float4 weightedBlendVar8_g9 = temp_output_59_0_g9;
-				float4 weightedBlend8_g9 = ( weightedBlendVar8_g9.x*SAMPLE_TEXTURE2D(_Normal0, sampler_MTerrainShared, uv_Splat0 ) + weightedBlendVar8_g9.y*SAMPLE_TEXTURE2D(_Normal1, sampler_MTerrainShared, uv_Splat1 ) + weightedBlendVar8_g9.z*SAMPLE_TEXTURE2D(_Normal2, sampler_MTerrainShared, uv_Splat2 ) + weightedBlendVar8_g9.w*SAMPLE_TEXTURE2D(_Normal3, sampler_MTerrainShared, uv_Splat3 ) );
+				float4 weightedBlend8_g9 = ( weightedBlendVar8_g9.x*SAMPLE_TEXTURE2D(_Normal0, sampler_LinearRepeat, uv_Splat0 ) + weightedBlendVar8_g9.y*SAMPLE_TEXTURE2D(_Normal1, sampler_LinearRepeat, uv_Splat1 ) + weightedBlendVar8_g9.z*SAMPLE_TEXTURE2D(_Normal2, sampler_LinearRepeat, uv_Splat2 ) + weightedBlendVar8_g9.w*SAMPLE_TEXTURE2D(_Normal3, sampler_LinearRepeat, uv_Splat3 ) );
 				float3 temp_output_61_0_g9 = UnpackNormalScale( weightedBlend8_g9, 1.0 );
 				
 
@@ -3510,7 +3503,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
@@ -3822,7 +3814,6 @@ struct VertexInput
 
 
 			
-			SAMPLER(sampler_MTerrainShared);
 struct VertexInput
 			{
 				float4 vertex : POSITION;
