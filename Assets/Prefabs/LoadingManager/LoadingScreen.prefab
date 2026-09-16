@@ -45,6 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917cd37f074d62548af1712cc40ac39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
+  exposedMusicParam: MusicVolume
+  musicFadeDuration: 0.5
+  musicVolumeMin: -80
+  musicVolumeMax: 0
   transitionCanvas: {fileID: 7746257483644824413}
   fadeImage: {fileID: 2568374364537359028}
   loadingSpinner: {fileID: 3745465322451524145}
@@ -340,7 +345,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 511
 --- !u!1 &7782421032582308852
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +424,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &4492462118531944484
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -433,6 +438,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
