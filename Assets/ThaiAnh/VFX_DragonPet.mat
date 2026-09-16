@@ -47,12 +47,15 @@ Material:
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _Erode: 0
     - _FresnelPower: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
