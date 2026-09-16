@@ -59,8 +59,8 @@ public class MoveManager : MonoBehaviour
     public void CheckDrag(bool Drag)
     {
         if (Drag)
-            rb.drag = 100f;
+            rb.linearDamping = 100f;
         else
-            rb.drag = 0f;
+            rb.linearDamping = 0f;
     }
 }

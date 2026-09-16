@@ -1,22 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TitleScreen : MonoBehaviour
 {
     public GameObject pressAnyButtonText;
-    public GameObject messengerImage;
-    public GameObject panelLogin;
+    public GameObject mainMenuPanel;
 
     private bool canPress = false;
-    private int pressCount = 0;
 
     void Start()
     {
         pressAnyButtonText.SetActive(false);
-        messengerImage.SetActive(false);
-        panelLogin.SetActive(false);
-
-        // Sau 5s mới hiện PRESS ANY BUTTON
+        mainMenuPanel.SetActive(false);
         Invoke(nameof(ShowPressAnyButton), 5f);
     }
 
@@ -28,25 +22,11 @@ public class TitleScreen : MonoBehaviour
 
     void Update()
     {
-        if (canPress && Input.anyKeyDown)
+        if (canPress && (Input.anyKeyDown || Input.GetMouseButtonDown(0)))
         {
-            pressCount++;
-
-            if (pressCount == 1)
-            {
-                // Lần đầu nhấn: hiện Messenger
-                messengerImage.SetActive(true);
-            }
-            else if (pressCount == 2)
-            {
-                // Lần nhấn thứ 2: hiện Panel Login
-                panelLogin.SetActive(true);
-
-                // Ẩn những thứ không cần nữa
-                messengerImage.SetActive(false);
-                pressAnyButtonText.SetActive(false);
-                this.enabled = false; // tắt script
-            }
+            pressAnyButtonText.SetActive(false);
+            mainMenuPanel.SetActive(true);
+            enabled = false;
         }
     }
 }

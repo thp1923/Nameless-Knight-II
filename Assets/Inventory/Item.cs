@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using PlayFab.EconomyModels;
 using UnityEngine;
 
 public enum ItemType { Consumable, Equipment}

@@ -100,12 +100,7 @@ public class EnemyTakeDamge : StatsAlive
 
     public void Death()
     {
-        var achievement = GetComponent<EnemyAchievement>();
-        if (achievement != null)
-        {
-            achievement.TryUnlock();
-        }
-        FindObjectOfType<PlayerAim>().RemoveEnemy(gameObject);
+        FindFirstObjectByType<PlayerAim>().RemoveEnemy(gameObject);
         // Danh sách tạm cho các item được chọn ngẫu nhiên
         List<Item> droppedItems = new List<Item>();
 
@@ -130,7 +125,7 @@ public class EnemyTakeDamge : StatsAlive
                 itemPickup.items.AddRange(droppedItems);
             }
         }
-        FindObjectOfType<UpgradeStats>().AddPoint(Point);
+        FindFirstObjectByType<UpgradeStats>().AddPoint(Point);
         if(me != null)
             Destroy(me);
     }

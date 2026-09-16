@@ -11,7 +11,6 @@ public class HpBossDragon : StatsAlive
     public GameObject me;
     public TextMeshProUGUI damPopUp;
 
-    public TrophyType trophyType;
 
     public LayerMask playerMask;
     public float rangeShow = 70f;
@@ -83,17 +82,12 @@ public class HpBossDragon : StatsAlive
 
     public void Death()
     {
-        GameJoltManager gjManager = FindObjectOfType<GameJoltManager>();
-        if (gjManager != null)
-        {
-            gjManager.UnlockTrophy(trophyType);
-        }
         GameObject go = Instantiate(drop, new Vector3(transform.position.x, transform.position.y + 0.75f, transform.position.z), Quaternion.identity);
         foreach (var itemDrop in itemsDrop)
         {
             go.GetComponent<ItemPickUp>().items.Add(itemDrop);
         }
-        FindObjectOfType<UpgradeStats>().AddPoint(Point);
+        FindFirstObjectByType<UpgradeStats>().AddPoint(Point);
         if (me != null)
             Destroy(me);
     }

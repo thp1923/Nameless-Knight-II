@@ -1,8 +1,6 @@
 using UnityEngine;
 public class CatInteraction : MonoBehaviour
 {
-    public GameJoltManager gameJoltManager;
-    public TrophyType CAT = TrophyType.SecretCatTrophy;
     public Animator catAnimator;
     public AudioSource audioSource;
 
@@ -54,9 +52,6 @@ public class CatInteraction : MonoBehaviour
             audioSource.Stop();
 
         yield return new WaitForSeconds(1f);
-
-        if (gameJoltManager != null)
-            gameJoltManager.UnlockTrophy(CAT);
 
         hasInteracted = false;
     }

@@ -186,6 +186,7 @@ Material:
     - _SunPos: {r: 0.56, g: 1.07, b: -0.09, a: 0}
     - _TintColor: {r: 0.4433962, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &6280168991087943801
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 10
 --- !u!114 &6457466980954465848
 MonoBehaviour:
   m_ObjectHideFlags: 11

@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using PlayFab;
-using PlayFab.ClientModels;
 using StatsManager;
 
 public class MainMenuManager : MonoBehaviour
@@ -24,32 +22,23 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnNewGameClicked()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
-            result =>
+        usedSlotCount = 0;
+        for (int i = 1; i <= 4; i++)
+        {
+            string key = $"SaveSlot{i}";
+            if (LocalSaveStorage.Has(key))
             {
-                usedSlotCount = 0;
+                usedSlots[i - 1] = key;
+                usedSlotCount++;
+            }
+            else
+            {
+                StartNewGame(key);
+                return;
+            }
+        }
 
-                for (int i = 1; i <= 4; i++)
-                {
-                    string key = $"SaveSlot{i}";
-                    if (result.Data.ContainsKey(key))
-                    {
-                        usedSlots[i - 1] = key;
-                        usedSlotCount++;
-                    }
-                    else
-                    {
-                        StartNewGame(key);
-                        return;
-                    }
-                }
-
-                if (usedSlotCount >= 4)
-                {
-                    overwritePanel.SetActive(true);
-                }
-            },
-            error => Debug.LogError(error.GenerateErrorReport()));
+        if (usedSlotCount >= 4) overwritePanel.SetActive(true);
     }
     void StartNewGame(string slot)
     {
@@ -78,24 +67,19 @@ public class MainMenuManager : MonoBehaviour
     {
         mainMenuPanel.SetActive(false);
         loadGamePanel.SetActive(true);
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
-            result =>
+        for (int i = 1; i <= 4; i++)
+        {
+            string key = $"SaveSlot{i}";
+            if (LocalSaveStorage.TryGet(key, out string json))
             {
-                for (int i = 1; i <= 4; i++)
-                {
-                    string key = $"SaveSlot{i}";
-                    if (result.Data.ContainsKey(key))
-                    {
-                        var data = JsonUtility.FromJson<GameStateData>(result.Data[key].Value);
-                        slotTexts[i - 1].text = $"Level {data.Level} - {data.LastScene}";
-                    }
-                    else
-                    {
-                        slotTexts[i - 1].text = "Trống";
-                    }
-                }
-            },
-            error => Debug.LogError(error.GenerateErrorReport()));
+                var data = JsonUtility.FromJson<GameStateData>(json);
+                slotTexts[i - 1].text = $"Level {data.Level} - {data.LastScene}";
+            }
+            else
+            {
+                slotTexts[i - 1].text = "Trống";
+            }
+        }
             
     }
 

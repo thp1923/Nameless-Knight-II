@@ -139,7 +139,7 @@ public class PlayerDodge : MonoBehaviour
         controller.lockMovement = true;
         controller.lockRotation = true;
 
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
     }
 
@@ -150,7 +150,7 @@ public class PlayerDodge : MonoBehaviour
         controller.lockMovement = false;
         controller.lockRotation = false;
 
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
     }
 
