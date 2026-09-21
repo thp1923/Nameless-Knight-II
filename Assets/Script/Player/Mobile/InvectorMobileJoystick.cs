@@ -1,22 +1,21 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MobileJoystick : MonoBehaviour,
+public class InvectorMobileJoystick : MonoBehaviour,
     IPointerDownHandler,
     IDragHandler,
     IPointerUpHandler
 {
-    public MobileInput mobileInput;
+    public Invector.vCharacterController.vThirdPersonInput playerInput;
 
-    [Header("Joystick")]
     public RectTransform handle;
     public float radius = 50f;
 
-    private RectTransform rectTransform;
+    private RectTransform joystickRect;
 
     private void Awake()
     {
-        rectTransform = transform as RectTransform;
+        joystickRect = transform as RectTransform;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -26,10 +25,13 @@ public class MobileJoystick : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (playerInput == null)
+            return;
+
         Vector2 localPoint;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rectTransform,
+            joystickRect,
             eventData.position,
             eventData.pressEventCamera,
             out localPoint
@@ -41,8 +43,7 @@ public class MobileJoystick : MonoBehaviour,
         if (handle != null)
             handle.anchoredPosition = value * radius;
 
-        if (mobileInput != null)
-            mobileInput.SetMove(value);
+        playerInput.SetMobileMove(value);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -50,7 +51,7 @@ public class MobileJoystick : MonoBehaviour,
         if (handle != null)
             handle.anchoredPosition = Vector2.zero;
 
-        if (mobileInput != null)
-            mobileInput.StopMove();
+        if (playerInput != null)
+            playerInput.ReleaseMobileMove();
     }
 }
